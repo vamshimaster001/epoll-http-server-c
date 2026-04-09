@@ -95,6 +95,24 @@ ab -n 1000 -c 100 http://127.0.0.1:9999/
 
 ---
 
+Example request: 
+________________
+
+curl http://127.0.0.1:9999/
+
+Example response:
+_________________
+<html>
+  <head>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/app.js"></script>
+  </head>
+  <body>
+    <h1>Hello from HTTP server</h1>
+    <button onclick="showMessage()">Click Me</button>
+  </body>
+</html>
+
 Limitations
 -----------
 - Supports only basic HTTP (GET requests)
