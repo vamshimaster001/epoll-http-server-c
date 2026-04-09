@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -Wextra
 
-TARGET = TCPHTTPSERVER
-SRC = TCPHTTPSERVER-PRODUCTION-VERSION.c
+TARGET = server
+SRC = server.c
 
 all:
 	$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
