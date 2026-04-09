@@ -1,82 +1,91 @@
-🚀 Epoll-Based HTTP Server in C
-📌 Overview
+Epoll-Based HTTP Server in C
 
-This project is a high-performance, non-blocking HTTP server built in C using Linux epoll.
-It uses a single-threaded, event-driven architecture to efficiently handle multiple concurrent client connections.
+Overview
+--------
+This project is a high-performance, non-blocking HTTP server implemented in C using the Linux epoll API.  
+It follows a single-threaded, event-driven architecture to efficiently handle multiple concurrent client connections.
 
-The server demonstrates core systems programming concepts such as non-blocking I/O, event loops, and stateful connection handling — similar to how real-world high-performance servers operate.
+The server demonstrates core systems programming concepts such as non-blocking I/O, event loops, and per-client state management.
 
-🧠 Key Concepts
-Non-blocking sockets (O_NONBLOCK)
-epoll-based event-driven I/O
-Edge-triggered / level-triggered event handling
-Partial recv() / send() handling
-HTTP request parsing
-Keep-alive connections
-Per-client state management
-Efficient connection lifecycle handling
-🏗️ Architecture
+Features
+--------
+- Non-blocking sockets using O_NONBLOCK
+- epoll-based event loop
+- Handles multiple concurrent clients
+- Partial recv() and send() handling
+- Basic HTTP request parsing (GET)
+- Keep-alive connection support
+- Per-client state management
 
-The server follows an event loop model:
+Architecture
+------------
+The server uses an event-driven model:
 
-Create a non-blocking listening socket
-Register it with epoll
-Wait for events using epoll_wait()
-Handle events:
-EPOLLIN → read incoming data
-EPOLLOUT → send response
-Maintain per-client state (buffers, progress)
-Repeat
+1. Create a non-blocking listening socket
+2. Register the socket with epoll
+3. Wait for events using epoll_wait()
+4. Handle events:
+   - EPOLLIN: receive data from client
+   - EPOLLOUT: send response to client
+5. Maintain state for each connected client
+6. Repeat
 
-This allows a single thread to handle thousands of connections efficiently.
+This design allows a single thread to handle many connections efficiently.
 
-🔄 Event Flow
+Project Structure
+-----------------
+server.c    - main server implementation
+Makefile    - build configuration
+README.md   - project documentation
 
-Client Request → EPOLLIN → recv() → Parse HTTP → Prepare Response → EPOLLOUT → send() → Done / Keep-alive
+Build Instructions
+------------------
+Run:
+    make
 
-📁 Project Structure
-.
-├── server.c        # Main server implementation
-├── Makefile        # Build configuration
-├── README.md       # Project documentation
-⚙️ Build Instructions
-make
+Or compile manually:
+    gcc -o server server.c
 
-Or manually:
+Run
+---
+Start the server:
+    ./server
 
-gcc -o server server.c
-▶️ Run
-./server
+The server listens on:
+    http://localhost:9999
 
-Server runs on:
+Testing
+-------
+Using curl:
+    curl http://localhost:9999
 
-http://localhost:9999
-🧪 Test the Server
-Using curl
-curl http://localhost:9999
-Benchmark (optional)
-ab -n 1000 -c 100 http://127.0.0.1:9999/
-🧩 Features
-Handles multiple clients concurrently
-Supports HTTP/1.1 basic requests
-Keep-alive connection support
-Handles partial reads/writes (non-blocking safe)
-Efficient memory usage with per-client buffers
-⚠️ Limitations
-Supports basic HTTP (GET only)
-No TLS/HTTPS
-No advanced routing
-Minimal header parsing
-🔮 Future Improvements
-Multi-threaded version (thread pool)
-Support for POST/PUT requests
-Static file serving
-HTTP pipelining support
-Logging & metrics
-TLS (HTTPS) support
-📚 What I Learned
-Deep understanding of epoll and event-driven systems
-Handling non-blocking I/O correctly
-Designing per-connection state machines
-Managing partial reads/writes safely
-Building scalable network servers in C
+Basic load testing:
+    ab -n 1000 -c 100 http://127.0.0.1:9999/
+
+Limitations
+-----------
+- Supports only basic HTTP (GET requests)
+- No HTTPS/TLS support
+- Minimal HTTP header parsing
+- No routing or static file serving
+
+Future Improvements
+-------------------
+- Add multi-threading (thread pool)
+- Support POST/PUT methods
+- Serve static files
+- Improve HTTP parsing
+- Add logging and metrics
+- Add HTTPS support
+
+What I Learned
+--------------
+- Working with epoll for scalable I/O
+- Handling non-blocking sockets correctly
+- Designing event-driven systems
+- Managing partial reads and writes
+- Building a simple HTTP server from scratch
+
+Author
+------
+Vamshi Bijula
