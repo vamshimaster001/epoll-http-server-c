@@ -1,6 +1,7 @@
 Epoll-Based HTTP Server in C
 
 Overview
+--------
 
 This project is a high-performance, non-blocking HTTP server implemented in C using the Linux epoll API.
 It follows a single-threaded, event-driven architecture to efficiently handle multiple concurrent client connections.
@@ -8,6 +9,7 @@ It follows a single-threaded, event-driven architecture to efficiently handle mu
 The server demonstrates core systems programming concepts such as non-blocking I/O, event loops, and per-client state management.
 
 Features
+--------
 Non-blocking sockets using O_NONBLOCK
 epoll-based event loop
 Handles multiple concurrent clients
@@ -26,7 +28,7 @@ Proper HTTP responses:
 Architecture
 
 The server uses an event-driven model:
-
+--------------------------------------
 Create a non-blocking listening socket
 Register the socket with epoll
 Wait for events using epoll_wait()
@@ -39,6 +41,7 @@ Repeat
 This design allows a single thread to handle many connections efficiently.
 
 Design Highlights
+-----------------
 Event-driven architecture using epoll
 Per-client state machine (receive → process → send)
 Handles partial sends using offset tracking
@@ -51,6 +54,7 @@ Makefile - build configuration
 README.md - project documentation
 
 Build Instructions
+------------------
 
 Using Makefile:
 
@@ -71,8 +75,10 @@ The server listens on:
 http://localhost:9999
 
 Testing
+-------
 
 Basic request:
+--------------
 
 curl http://127.0.0.1:9999/
 
@@ -91,6 +97,7 @@ Load testing:
 ab -n 1000 -c 100 http://127.0.0.1:9999/
 
 Example Response
+----------------
 <html> <head> <link rel="stylesheet" href="/style.css"> <script src="/app.js"></script> </head> <body> <h1>Hello from HTTP server</h1> <button onclick="showMessage()">Click Me</button> </body> </html>
 Limitations
 Supports only basic HTTP (GET requests)
@@ -116,5 +123,6 @@ Author
 Vamshi Bijula
 
 Summary
+-------
 
 This project demonstrates how to build a high-performance, event-driven HTTP server from scratch using C and epoll, applying core systems programming and networking concepts used in real-world servers.
